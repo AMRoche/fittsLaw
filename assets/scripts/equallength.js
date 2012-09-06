@@ -11,7 +11,25 @@ var clickWhite = false;
 var currentMode;
 var counter = 0;
 
-equidistantSize(200);
+bigLongRed(200);
+
+function bigLongBlue(speccedLength){
+currentMode = "logGraphB";
+length = speccedLength;
+renderballs(canvasWidth, canvasHeight, speccedLength, currentMode);	
+}
+
+function bigLongRed(speccedLength){
+currentMode = "logGraphR";
+length = speccedLength;
+renderballs(canvasWidth, canvasHeight, speccedLength, currentMode);	
+}
+
+function equiVariSize(speccedLength){
+currentMode = "equiVari";
+length = speccedLength;
+renderballs(canvasWidth, canvasHeight, speccedLength, currentMode)
+}
 
 function equidistantSize(speccedLength){
 currentMode = "equiSize";
@@ -50,29 +68,72 @@ function renderballs(wide, high,speclength, mode){
 	var divOne = '<div id="one" style="top:'+y+'px; left:'+x+'px;"><img src="assets/images/whiteMed.png"></div>';
 	document.getElementById("canvas").innerHTML = divOne;
 	
-	var color = Math.floor(Math.random()*3);
+	if(mode != "equiVari"){
+		var color = Math.floor(Math.random()*3);
+	}
+	
+	if(mode == "equiVari"){
+		var color = Math.floor(Math.random()*4);
+	}
+	
 	var image = "";
 	
 	length = speclength;
 	
 	if (color == 0){
+		
 		if(mode=="diffDist"){
 			length = length/3;
 		}
 		image = "assets/images/blueMed.png";
+		
 		if(mode=="equiSize"){
 			image = "assets/images/blueSmall.png";
+		}
+		
+		if(mode=="equiVari"){
+			image = "assets/images/blueBig.png";
+			length = length/4;		
+		}
+		if(mode == "logGraphR" || mode == "logGraphB"){
+			length = Math.floor(Math.random()*length) + 26;
+		}
+		if(mode == "logGraphR"){
+			image = "assets/images/redSmall.png"
+		}
+		if(mode == "logGraphB"){
+			image = "assets/images/blueSmall.png"
 		}
 	}
 	
 	if (color == 1){
+		
 		if(mode=="diffDist"){
 			length = (length/3) * 2;
 		}
 		image = "assets/images/greenMed.png";
+		
 		if(mode=="equiSize"){
 			image = "assets/images/greenMed.png";
 		}
+		
+		if(mode=="equiVari"){
+			image = "assets/images/greenMed.png";
+			length = length/3;		
+		}
+		
+		if(mode == "logGraphR" || mode == "logGraphB"){
+			length = Math.floor(Math.random()*length) + 26;
+		}
+		
+		if(mode == "logGraphR"){
+			image = "assets/images/redMed.png"
+		}
+		
+		if(mode == "logGraphB"){
+			image = "assets/images/blueMed.png"
+		}
+
 	}
 	
 	if (color == 2){
@@ -80,13 +141,36 @@ function renderballs(wide, high,speclength, mode){
 			length = length;
 		}
 		image = "assets/images/redMed.png";
+		
 		if(mode=="equiSize"){
 			image = "assets/images/redBig.png";
 		}
+		
+		if(mode=="equiVari"){
+			image = "assets/images/redBig.png";
+			length = (length/3) *2;		
+		}
+		
+		if(mode == "logGraphR" || mode == "logGraphB"){
+			length = Math.floor(Math.random()*length) + 26;
+		}
+		if(mode == "logGraphR"){
+			image = "assets/images/redBig.png"
+		}
+		if(mode == "logGraphB"){
+			image = "assets/images/blueBig.png"
+		}
+		
 	}
+	if (color == 3){
+		if(mode=="equiVari"){
+			image = "assets/images/yellowSmall.png";
+			length = length;		
+		}
+	}
+	
 	pushx = Math.floor(x + length*Math.cos(degrees));
 	pushy = Math.floor(y + length*Math.sin(degrees));
-	length = speclength;
 	
 	if(pushx  < 50){
 		pushx += 50;
@@ -96,7 +180,13 @@ function renderballs(wide, high,speclength, mode){
 		pushy += 50;
 	}
 	
-	var divTwo = '<div id = "two" color="'+color+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"></div>';
+		if(mode == "logGraphR" || mode == "logGraphB"){
+			var divTwo = '<div id = "two" color="'+color+'" length ="'+length+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"></div>';
+		}
+		else{	
+			var divTwo = '<div id = "two" color="'+color+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"></div>';
+		}
+	length = speclength;
 	document.getElementById("canvas").innerHTML += divTwo;
 }
 
