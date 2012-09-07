@@ -86,7 +86,7 @@ function renderballs(wide, high,speclength, mode){
 		y += 50;
 	}
 	
-	var divOne = '<div id="one" style="top:'+y+'px; left:'+x+'px;"><img src="assets/images/whiteMed.png"></div>';
+	var divOne = '<div id="one" style="top:'+y+'px; left:'+x+'px;"><img src="assets/images/whiteMed.png"><div id = "oneButtonText">CLICK ME</div></div>';
 	document.getElementById("canvas").innerHTML = divOne;
 	
 	if(mode != "equiVari"){
@@ -202,10 +202,10 @@ function renderballs(wide, high,speclength, mode){
 	}
 	
 		if(mode == "logGraphR" || mode == "logGraphB"){
-			var divTwo = '<div id = "two" color="'+color+'" length ="'+length+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"></div>';
+			var divTwo = '<div id = "two" color="'+color+'" length ="'+length+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"><div id = "twoButtonText"></div></div>';
 		}
 		else{	
-			var divTwo = '<div id = "two" color="'+color+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"></div>';
+			var divTwo = '<div id = "two" color="'+color+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"><div id = "twoButtonText"></div></div>';
 		}
 	length = speclength;
 	document.getElementById("canvas").innerHTML += divTwo;
@@ -215,6 +215,8 @@ function renderballs(wide, high,speclength, mode){
 
 $('#one').live("click", function(){
 	clickWhite = true;
+	document.getElementById("oneButtonText").innerHTML = "";
+	document.getElementById("twoButtonText").innerHTML = "CLICK ME";
 	start = new Date();
 });
 
@@ -222,6 +224,8 @@ $('#two').live("click", function(){
 		if(clickWhite === true && start != null){	
 			counter++;
 			end = new Date();
+				document.getElementById("oneButtonText").innerHTML = "CLICK ME";
+	document.getElementById("twoButtonText").innerHTML = "";
 			var catClick = document.getElementById("two").getAttribute("color");
 			var timeDiff = end.getTime()-start.getTime()
 			console.log(counter+" : "+ catClick+" : "+ timeDiff+" ms");
