@@ -50,7 +50,7 @@ window.setTimeout("graphRender(document.getElementById('canvas').getAttribute('t
 
 function logaGraph(arrayCall){
 	document.getElementById('canvas').innerHTML="";
-	document.getElementById('canvas').innerHTML+='<div id = "two" style = "bottom:-8px; left:-8px;"><img src = "assets/images/whiteSmall.png"></div>';		
+	document.getElementById('canvas').innerHTML+='<div id = "two" style = "bottom:-5px; left:0px;"><img src = "assets/images/whiteSmall.png"></div>';		
 	var aOA = eval(arrayCall);
 	console.log(arrayCall);
 	for(var i = 0; i < aOA.length; i++){
@@ -125,7 +125,7 @@ function dotAverage(arrayCall){
 	console.log(resultsArr);
 	for(var x = 0; x < resultsArr.length; x++){
 		if(String(resultsArr[x]) == null || String(resultsArr[x]) == "NaN"){
-			var replace = '<div class = "resultsWrapper"><div class="imageWrapper"><img src="assets/images/'+String(images[x])+'"></div><div class="resultWrapper"><p>Undefined</p></div></div>';		
+			var replace = '<div class = "resultsWrapper"><div class="imageWrapper"><img src="assets/images/'+String(images[x])+'"></div><div class="resultWrapper"><p>Nobody\'s clicked one of these yet!</p></div></div>';		
 		}
 		else {
 			var replace = '<div class = "resultsWrapper"><div class="imageWrapper"><img src="assets/images/'+String(images[x])+'"></div><div class="resultWrapper"><p>'+String(resultsArr[x])+' ms</p></div></div>';
