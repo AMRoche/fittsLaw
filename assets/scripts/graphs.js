@@ -1,3 +1,10 @@
+//graphRender(String (type of graph: logGraph, dotPattern),new Array(arrays containing results to graph),String (title of graph),String (id of div do render graph to));
+//graphRender(String (type of graph: logGraph, dotPattern),String (arrays containing results to graph),String (title of graph),String (id of div do render graph to));
+//ues first method for logGraph and second for dotPattern graph
+//logGraph = logarithmic time graph
+//dotPattern = graph comparing average time for each
+var frameToDrawTo = "canvas";
+
 var logGraphBArr = new Array (3);
 	for (i = 0; i < logGraphBArr . length; i++){
 	logGraphBArr [i] = new Array ();}
@@ -34,35 +41,46 @@ var logResults = new Array(2);
 //methods to run on loading
     var logChart;
     var verticalChart;
+	var undrawn = true;
+
+$(document).ready(function() {
+	graphRender('logGraph',new Array(logResults[0],logResults[1]),'Distance versus time for two inputs',frameToDrawTo)
+	//reRender();
+});
+
+$(window).focus(function() {
+	if(document.getElementById(frameToDrawTo).getAttribute("type") == 'logGraph'){
+		//reRender();
+	}
+	
+	if(undrawn == true){
+		if(document.getElementById(frameToDrawTo).getAttribute("type") == 'logGraph'){
+			graphRender('logGraph',new Array(logResults[0],logResults[1]),'Distance versus time for two inputs',frameToDrawTo);
+		}
+		undrawn == false;
+	}
+
+//    logChart.redraw();
+})
+
+.blur(function() {
+        undrawn = true;
+   });
+
+function reRender() {
+	logChart.redraw();
+	console.log("lol");
+        setTimeout(reRender, 1000);
+}   
     
-    $(document).ready(
-    	graphRender('dotPattern','equiVariArr','Average time taken to click varidistant, different size buttons')
-    );
-var logData = new Miso.Dataset({
-	  data : logResults
-	});
 
-function output(){
-		console.log(logResults);
-		console.log(JSON.stringify(logResults));
-}
-
-function miso(){	
-logData = new Miso.Dataset({
-	  data : logResults
-	});
-	logData.fetch({ 
-	  success : function() {
-	    console.log("Columns: ", this.columnNames());
-	    console.log("Row Count ", this.length);
-	    console.log(this.rows()); 
-	  }
-	});	
-console.log(logResults);
-}
 
 //-----------------------------------------GRAPH CODE-------------------------------------------------
-function barChart(title, array, nameArray){
+function barChart(title, array, nameArray, drawDestination){
+var drawer = drawDestination;
+if(drawDestination == null || drawDestination == ""){
+	drawer = frameToDrawTo;
+}
 var arr = eval(array);
 var namen = eval(nameArray);
 var titleString = title;
@@ -71,29 +89,31 @@ var nameOfArray;
 var resultsArr;
 arr = getAverage(arr); //getAverage takes an array argument with x subarrays containing numbers, and returns an array with x numbers
 //console.log(array);
-if(nameArray == null){
+if(nameArray == null || nameArray.length == 0){
 	if(array == "equiVariArr"){
 	nameOfArray = ['Big Blue' , 'Medium Green' , 'Big Red', 'Small Yellow' ];
 	}	
 	
 	if(array == "diffDistArr"){
-	nameOfArray = ['Medium Green' , 'Medium Red' , 'Medium Blue'];
+	nameOfArray = ['Medium Blue' , 'Medium Green' , 'Medium Red'];
 	}		
 	
 	if(array == "equaLongArr"){
 	nameOfArray = ['Small Blue' , 'Medium Green' , 'Big Red'];
 	}		
 }
+
 else{
-nameOfArray = namen;
+	nameOfArray = namen;
 }
+
 //console.log(arr);
 $(function () {
     $(document).ready(function() {
     	
         verticalChart = new Highcharts.Chart({
             chart: {
-                renderTo: 'canvas',
+                renderTo: drawer,
                 type: 'bar'
             },
             title: {
@@ -143,12 +163,13 @@ $(function () {
 });
 }
 //----LOG GRAPHING----
-function logGraph(){
+function logGraph(drawDestination){
+	var reDraw = drawDestination;
 	$(function () {
     $(document).ready(function() {
         logChart = new Highcharts.Chart({
             chart: {
-                renderTo: 'canvas',
+                renderTo: drawDestination,
                 type: 'scatter',
                 zoomType: 'xy'
             },
@@ -170,7 +191,8 @@ function logGraph(){
             yAxis: {
                 title: {
                     text: 'Time taken to click (ms)'
-                }
+                },
+                max : 2000 
             },
             tooltip: {
                 formatter: function() {
@@ -190,6 +212,7 @@ function logGraph(){
             },
             plotOptions: {
                 scatter: {
+                	animation : false,
                     marker: {
                         radius: 5,
                         states: {
@@ -210,17 +233,18 @@ function logGraph(){
             },
             series: [{
                 name: 'Input device 1',
-                color: 'rgba(0,0,255,1)',
+                color: '#0000FF',
                 data: logResults[0]
             }, {
                 name: 'Input device 2',
-                color: 'rgba(255,0,0,1)',
+                color: '#FF0000',
                 data: logResults[1]
             }]
         });
     });
     
 });
+//setInterval(function(){logGraph(drawDestination)},1000);
 }
 
 //-----------------------------------------GRAPHING---------------------------------------------------
@@ -246,9 +270,13 @@ function getAverage(array){
 
 
 
-function graphRender(type, arrayName, title){
-	document.getElementById("canvas").setAttribute("type", type);
-	document.getElementById("canvas").setAttribute("array", arrayName);
+function graphRender(type, arrayName, title, drawDestination){
+	var drawer = drawDestination;
+	if(drawDestination == "" || drawDestination == null){
+	drawer = frameToDrawTo;
+	}
+	document.getElementById(drawer).setAttribute("type", type);
+	document.getElementById(drawer).setAttribute("array", arrayName);
 	if(type=="logGraph"){
 		if(arrayName instanceof Array){
 			//logaGraph(arrayName);
@@ -262,106 +290,15 @@ function graphRender(type, arrayName, title){
 		
 			//logaGraph(new Array(string[0],string[1]));	//perfectly fine for when two arrays are being used, but in this case we're fine with logResults.
 		}
-			logGraph();
+			logGraph(drawer);
 	}
 	
 	if(type=="dotPattern"){
-		barChart(title, arrayName);
+		barChart(title, arrayName,null, drawer);
 	}
 //window.setTimeout("graphRender(document.getElementById('canvas').getAttribute('type'),document.getElementById('canvas').getAttribute('array'))", 1000);
 }
 
-$(document).one('click',function() {
-setInterval(function() { $('body').append('has focus? ' + window_focus + '<br>'); }, 1000);
-});​
- // make graph re-draw every time it regains focus.
- 
-function logaGraph(arrayCall){
-	document.getElementById('canvas').innerHTML="";
-	document.getElementById('canvas').innerHTML+='<div id = "two" style = "bottom:-5px; left:0px;"><img src = "assets/images/whiteSmall.png"></div>';		
-	var aOA = eval(arrayCall);
-	//console.log(arrayCall);
-	for(var i = 0; i < aOA.length; i++){
-		aOA[i] = eval(aOA[i]);
-	}
-		//get width of circle and hardcode
-	var timeArray = new Array();
-	for(var x = 0; x < aOA.length; x++){
-		for(var y = 0; y < aOA[x].length; y++){
-			for(var z = 0; z < aOA[x][y].length; z++){
-				//console.log("X:"+x+"Y:"+y+"Z:"+z);
-					var image = "";
-					var crossPush = 0;
-					var height = 0;
-					var timeLength = String(aOA[x][y][z]).split(":"); //time is timeLength[0] and length is timeLength[1]
-					//console.log(timeLength[0]);
-					//console.log(timeLength[1]);
-					var widthOfBall;
-					if(x == 0){
-						image = "assets/images/blueSmall.png";
-							if(y == 0){widthOfBall = 15;}
-							if(y == 1){widthOfBall = 25;}
-							if(y == 2){widthOfBall = 45;}
-					}
-					if(x == 1){
-						image = "assets/images/redSmall.png";
-							if(y == 0){widthOfBall = 15;}
-							if(y == 1){widthOfBall = 25;}
-							if(y == 2){widthOfBall = 45;}
-					}
-					
-					//timeArray.push(parseInt(timeLength[0]));
-					//timeLength = null;
-					var shoveY = Math.floor((parseInt(timeLength[0])));
-					var shoveX = Math.floor(parseInt(timeLength[1])/widthOfBall);
-			//		logResults[x][y].push(shoveX+":"+shoveY);
-					document.getElementById('canvas').innerHTML+='<div id = "two" style = "bottom:'+shoveY+'px; left: '+shoveX+'px;"><img src = "'+image+'"></div>';
-						
-					//2 big, 1 med, 0 small					
-				
-			}
-		}
-	}
-}
-
-function dotAverage(arrayCall){
-	console.log(arrayCall);
-	document.getElementById('canvas').innerHTML="";
-	var images = new Array();
-	if(arrayCall==="equiVariArr"){
-		images = new Array("blueBig.png","greenMed.png","redBig.png","yellowSmall.png");
-	}
-	if(arrayCall==="diffDistArr"){
-		images = new Array("blueMed.png","greenMed.png","redMed.png");	
-	}
-	if(arrayCall==="equaLongArr"){
-		images = new Array("blueSmall.png","greenMed.png","redBig.png");
-	}	
-				
-	var tempArr = eval(arrayCall);
-	var resultsArr = new Array(tempArr.length);
-		console.log("dotPointAverage ready");
-		
-	for (var i = 0; i < tempArr.length; i++){
-		var average = 0;
-			for(var j = 0; j < tempArr[i].length; j++)
-				{
-					average += parseInt(tempArr[i][j]);
-				}
-		resultsArr[i] = Math.floor(average / tempArr[i].length);
-		}
-		
-	console.log(resultsArr);
-	for(var x = 0; x < resultsArr.length; x++){
-		if(String(resultsArr[x]) == null || String(resultsArr[x]) == "NaN"){
-			var replace = '<div class = "resultsWrapper"><div class="imageWrapper"><img src="assets/images/'+String(images[x])+'"></div><div class="resultWrapper"><p>Nobody\'s clicked one of these yet!</p></div></div>';		
-		}
-		else {
-			var replace = '<div class = "resultsWrapper"><div class="imageWrapper"><img src="assets/images/'+String(images[x])+'"></div><div class="resultWrapper"><p>'+String(resultsArr[x])+' ms</p></div></div>';
-		}
-		document.getElementById('canvas').innerHTML += replace;
-	}
-}
 //-----------------------------------------FUNCTIONS THAT WRITE MESSAGE INPUT TO ARRAYS------------------------------
 function logGraphB(message){
 	var arrayInfo = message.split(":"); //splits message based on colon seperators
@@ -379,8 +316,10 @@ logResults[0].push(new Array(x,y));
 
 if(document.getElementById("canvas").getAttribute("type") == 'logGraph'){
 	logChart.series[0].addPoint(new Array(x,y));
-		logChart.redraw();
-	console.log("POINT ADDED");
+graphRender('logGraph',new Array(logResults[0],logResults[1]),'Distance versus time for two inputs',frameToDrawTo);
+
+//		logChart.redraw();
+//	console.log(logChart.series[0]);
 }
 
 //	logData.rowByPosition(0).addColumn({
@@ -401,9 +340,9 @@ var y = Math.floor(parseInt(arrayInfo[1]));
 logResults[1].push(new Array(x,y));
 
 if(document.getElementById("canvas").getAttribute("type") == 'logGraph'){
-	logChart.series[1].addPoint(new Array(x,y));
-	logChart.redraw();
-	console.log("POINT ADDED");
+	graphRender('logGraph',new Array(logResults[0],logResults[1]),'Distance versus time for two inputs',frameToDrawTo);
+	//logChart.series[1].addPoint(new Array(x,y));
+//graphRender('logGraph',new Array(logResults[0],logResults[1]),'Distance versus time for two inputs',frameToDrawTo)
 }
 
 

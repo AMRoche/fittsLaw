@@ -1,5 +1,7 @@
-var canvasWidth = document.getElementById("canvas").offsetWidth - 50;
-var canvasHeight = document.getElementById("canvas").offsetHeight - 50;
+//init work; set ifToStartFrom to id of element you wish to draw experiments in.
+var idToStartFrom = "canvas";
+var canvasWidth = document.getElementById(idToStartFrom).offsetWidth - 50;
+var canvasHeight = document.getElementById(idToStartFrom).offsetHeight - 50;
 var pushx = 0;
 var	pushy = 0;
 var x = Math.floor(Math.random()*canvasWidth);
@@ -24,40 +26,40 @@ else {
 //equidistantSize(200);
 //diffDistance(200);
 
-function bigLongBlue(speccedLength){
+function bigLongBlue(speccedLength, targetId){
 	currentMode = "logGraphB";
 	length = speccedLength;
-	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode);	
+	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode, targetId);	
 }
 
-function bigLongRed(speccedLength){
+function bigLongRed(speccedLength, targetId){
 	currentMode = "logGraphR";
 	length = speccedLength;
-	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode);	
+	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode, targetId);	
 }
 
-function equiVariSize(speccedLength){
+function equiVariSize(speccedLength, targetId){
 	currentMode = "equiVari";
 	length = speccedLength;
-	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode)
+	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode, targetId)
 }
 
-function equidistantSize(speccedLength){
+function equidistantSize(speccedLength, targetId){
 	currentMode = "equiSize";
 	length = speccedLength;
-	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode)
+	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode, targetId)
 }
 
-function diffDistance(speccedLength){
+function diffDistance(speccedLength, targetId){
 	currentMode="diffDist";
 	length = speccedLength;
-	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode);	
+	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode, targetId);	
 }
 
-function equalLength(speccedLength){
+function equalLength(speccedLength, targetId){
 	currentMode = "equaLong";
 	length = speccedLength;
-	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode);	
+	renderballs(canvasWidth, canvasHeight, speccedLength, currentMode, targetId);	
 }
 
 function webSocketsOn() {
@@ -72,7 +74,11 @@ function webSocketsOff() {
 }
 
 //renders the two balls which move around the screen.
-function renderballs(wide, high,speclength, mode){
+function renderballs(wide, high,speclength, mode, drawTo){
+	var target = drawTo;
+	if(drawTo == null || drawTo == ""){
+		target = "canvas";
+	}
 	//length = speclength;
 	x = wide/2;
 	y = high/2;
@@ -87,7 +93,7 @@ function renderballs(wide, high,speclength, mode){
 	}
 	
 	var divOne = '<div id="one" style="top:'+y+'px; left:'+x+'px;"><img src="assets/images/whiteMed.png"><div id = "oneButtonText">CLICK ME</div></div>';
-	document.getElementById("canvas").innerHTML = divOne;
+	document.getElementById(target).innerHTML = divOne;
 	
 	if(mode != "equiVari"){
 		var color = Math.floor(Math.random()*3);
@@ -208,7 +214,7 @@ function renderballs(wide, high,speclength, mode){
 			var divTwo = '<div id = "two" color="'+color+'" style = "top:'+pushy+'px; left: '+pushx+'px;"><img src = "'+image+'"><div id = "twoButtonText"></div></div>';
 		}
 	length = speclength;
-	document.getElementById("canvas").innerHTML += divTwo;
+	document.getElementById(target).innerHTML += divTwo;
 }
 
 //click handlers ahead.

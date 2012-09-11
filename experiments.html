@@ -15,13 +15,13 @@
 						//equidistantSize(200);
 						//diffDistance(200);-->
 						<p> Select an experiment type, then click between the white and coloured circles. Results are fed through to graph.html and
-							stored. No actual graphing as of yet; just results compiled in to arrays which print in to console. </p>
-			<div class = "topBar" onclick = "bigLongBlue(200);"><p>Pointing Device</p><p>One</p></div>
-			<div class = "topBar" onclick = "bigLongRed(200);"><p>Pointing Device</p><p>Two</p></div>
-			<div class = "topBar" onclick = "equiVariSize(200);"><p>Differing Size,</p><p>Differing Distance</p></div>
-			<div class = "topBar" onclick = "equidistantSize(200);"><p>Differing Size,</p><p>Same Distance</p></div>
-			<div class = "topBar" onclick = "diffDistance(200);"><p>Differing Distance,</p><p>Same Size.</p></div>
-			<div id = "canvas">
+							stored. Scroll down to the graphing section to see the graphs in action. </p>
+			<div class = "topBar" onclick = "bigLongBlue(200, 'canvas');"><p>Pointing Device</p><p>One</p></div>
+			<div class = "topBar" onclick = "bigLongRed(200, 'canvas');"><p>Pointing Device</p><p>Two</p></div>
+			<div class = "topBar" onclick = "equiVariSize(200, 'canvas');"><p>Differing Size,</p><p>Differing Distance</p></div>
+			<div class = "topBar" onclick = "equidistantSize(200, 'canvas');"><p>Differing Size,</p><p>Same Distance</p></div>
+			<div class = "topBar" onclick = "diffDistance(200, 'canvas');"><p>Differing Distance,</p><p>Same Size.</p></div>
+			<div id = "canvas" class = "drawZone">
 			
 			</div>
 		</div>

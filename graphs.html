@@ -10,13 +10,12 @@
 		<div id= "contentWrapper"> 
 			<h1>Graphing page</h1>
 
-			<div class = "topBar" onclick = "graphRender('logGraph',new Array('logGraphBArr','logGraphRArr','Distance versus time for two inputs'));"><p>Two Pointing</p><p>Device Comparison</p></div>
-			<div class = "topBar" onclick = "graphRender('dotPattern','equiVariArr','Average time taken to click varidistant, different size buttons');"><p>Differing Size,</p><p>Differing Distance</p></div>
-			<div class = "topBar" onclick = "graphRender('dotPattern','equaLongArr','Average time taken to click equidistant, equal size buttons.');"><p>Differing Size,</p><p>Same Distance</p></div>
-			<div class = "topBar" onclick = "graphRender('dotPattern','diffDistArr','Average time taken to click varidistant, equal size buttons.');"><p>Differing Distance,</p><p>Same Size.</p></div>
-			<div class = "topBar" onclick = "miso();">Miso checker</div>
+			<div class = "topBar" onclick = "graphRender('logGraph',new Array('logGraphBArr','logGraphRArr','Distance versus time for two inputs', 'canvas'));"><p>Two Pointing</p><p>Device Comparison</p></div>
+			<div class = "topBar" onclick = "graphRender('dotPattern','equiVariArr','Average time taken to click varidistant, different size buttons', 'canvas');"><p>Differing Size,</p><p>Differing Distance</p></div>
+			<div class = "topBar" onclick = "graphRender('dotPattern','equaLongArr','Average time taken to click equidistant, equal size buttons.', 'canvas');"><p>Differing Size,</p><p>Same Distance</p></div>
+			<div class = "topBar" onclick = "graphRender('dotPattern','diffDistArr','Average time taken to click varidistant, equal size buttons.', 'canvas');"><p>Differing Distance,</p><p>Same Size.</p></div>
 			
-				<div id = "canvas">
+				<div id = "canvas" class = "drawZone">
 				</div>
 		</div>
 	</body>
@@ -26,7 +25,6 @@
 	<div pub-key="pub-d2c1ec0e-39c3-4acf-a6d5-2514dac5fa69" sub-key="sub-cd0c1fca-da71-11e1-a851-630e627b877d" ssl="off" origin="pubsub.pubnub.com" id="pubnub"></div>
 	<script src="assets/scripts/pubnub.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="assets/scripts/miso.js"></script>
 	<script src="assets/scripts/highcharts.js"></script>
 	<script src="assets/scripts/graphs.js"></script>
 </html>

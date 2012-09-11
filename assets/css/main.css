@@ -1,7 +1,7 @@
 /* CSS crunched with Crunch - http://crunchapp.net/ */
 h1{margin-top:0px;}
 #contentWrapper{width:800px;margin:0 auto;}#contentWrapper .topBar{width:95px;padding:10px;margin:0px 20px;margin-bottom:16px;float:left;border:2px solid black;font-size:12px;}#contentWrapper .topBar p{margin:0px;}
-#contentWrapper #canvas{position:relative;float:left;border:2px solid #000000;width:800px;height:440px;}#contentWrapper #canvas .resultsWrapper{height:91px;margin:10px;}#contentWrapper #canvas .resultsWrapper .imageWrapper{height:50px;}
-#contentWrapper #canvas #one{position:absolute;display:block;}#contentWrapper #canvas #one #oneButtonText{text-align:centre;font-size:8px;}
-#contentWrapper #canvas #two{position:absolute;display:block;}#contentWrapper #canvas #two #twoButtonText{text-align:centre;font-size:8px;}
-#contentWrapper #canvas #opaque{position:absolute;}
+#contentWrapper .drawZone{position:relative;float:left;border:2px solid #000000;width:800px;height:440px;}#contentWrapper .drawZone .resultsWrapper{height:91px;margin:10px;}#contentWrapper .drawZone .resultsWrapper .imageWrapper{height:50px;}
+#contentWrapper .drawZone #one{position:absolute;display:block;}#contentWrapper .drawZone #one #oneButtonText{text-align:centre;font-size:8px;}
+#contentWrapper .drawZone #two{position:absolute;display:block;}#contentWrapper .drawZone #two #twoButtonText{text-align:centre;font-size:8px;}
+#contentWrapper .drawZone #opaque{position:absolute;}
