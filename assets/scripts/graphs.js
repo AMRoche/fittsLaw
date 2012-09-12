@@ -464,11 +464,11 @@ function webSocketsOff() {
 			logGraphB(message);
 		},
 		disconnect : function() {
-			//console.log("Connection to logGraphB lost. Reconnecting.");
+			console.log("Connection to logGraphB lost. Reconnecting.");
 		},
 		reconnect : function() {
-			//console.log("Reconnected to logGraphB");
-		},
+			console.log("Reconnected to logGraphB");
+		}
 	});
 	PUBNUB.subscribe({
 		channel : "logGraphR",
@@ -477,11 +477,11 @@ function webSocketsOff() {
 			logGraphR(message);
 		},
 		disconnect : function() {
-			//console.log("Connection to logGraphR lost. Reconnecting.");
+			console.log("Connection to logGraphR lost. Reconnecting.");
 		},
 		reconnect : function() {
-			//console.log("Reconnected to logGraphR");
-		},
+			console.log("Reconnected to logGraphR");
+		}
 	});
 	PUBNUB.subscribe({
 		channel : "equiVari",
@@ -490,11 +490,11 @@ function webSocketsOff() {
 			equiVari(message);
 		},
 		disconnect : function() {
-			//console.log("Connection to equiVari lost. Reconnecting.");
+			console.log("Connection to equiVari lost. Reconnecting.");
 		},
 		reconnect : function() {
-			//console.log("Reconnected to equiVari");
-		},
+			console.log("Reconnected to equiVari");
+		}
 	});
 	PUBNUB.subscribe({
 		channel : "diffDist",
@@ -503,11 +503,11 @@ function webSocketsOff() {
 			diffDist(message);
 		},
 		disconnect : function() {
-			//console.log("Connection to diffDist lost. Reconnecting.");
+			console.log("Connection to diffDist lost. Reconnecting.");
 		},
 		reconnect : function() {
-			//console.log("Reconnected to diffDist");
-		},
+			console.log("Reconnected to diffDist");
+		}
 	});
 	PUBNUB.subscribe({
 		channel : "equiSize",
@@ -516,11 +516,11 @@ function webSocketsOff() {
 			equaLong(message);
 		},
 		disconnect : function() {
-			//console.log("Connection to equaLong lost. Reconnecting.");
+			console.log("Connection to equaLong lost. Reconnecting.");
 		},
 		reconnect : function() {
-			//console.log("Reconnected to equaLong");
-		},
+			console.log("Reconnected to equaLong");
+		}
 	});
 
 })();
