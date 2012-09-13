@@ -3,9 +3,7 @@
 //ues first method for logGraph and second for dotPattern graph
 //logGraph = logarithmic time graph
 //dotPattern = graph comparing average time for each
-var frameToDrawTo = 'canvas'';
-
-	
+var frameToDrawTo = "canvas";
 
 var genericLength = length; //pulled from experiments.js . Define as integer to remove experiments.js from requirements for this page.
 
@@ -108,58 +106,58 @@ var undrawn = true;
 function randomAdd(repeats , type, array)
 {	
 	var repeatTimes = repeats;
-	if(type == null){
-		if(array = "equaLongArr"){
+	if(type == "dotPattern"){
+		if(array == "equaLongArr"){
 			for(i = 0; i < repeatTimes; i ++){
 				var test = Math.floor(Math.random()*3);
 					if(test == 0){
-						equaLongArr.push(test , Math.floor((Math.random()*200)+800));
+						equaLongArr[test].push(Math.floor((Math.random()*200)+800));
 						verticalChart.series[0].setData(getAverage(equaLongArr), true);
 					}
 					if(test == 1){
-						equaLongArr.push(test , Math.floor((Math.random()*200)+700));
+						equaLongArr[test].push(Math.floor((Math.random()*200)+700));
 						verticalChart.series[0].setData(getAverage(equaLongArr), true);
 					}
 					if(test == 2){
-						equaLongArr.push(test , Math.floor((Math.random()*200)+600));
+						equaLongArr[test].push(Math.floor((Math.random()*200)+600));
 						verticalChart.series[0].setData(getAverage(equaLongArr), true);
 					}
 			}
 		}
-		if(array = "equiVariArr"){
+		if(array == "equiVariArr"){
 			for(i = 0; i < repeatTimes; i ++){
 				var test = Math.floor(Math.random()*4);
 					if(test == 0){
-						equiVariArr.push(test , Math.floor((Math.random()*200)+400));
+						equiVariArr[test].push(Math.floor((Math.random()*200)+400));
 						verticalChart.series[0].setData(getAverage(equiVariArr), true);
 					}
 					if(test == 1){
-						equiVariArr.push(test , Math.floor((Math.random()*200)+500));
+						equiVariArr[test].push(Math.floor((Math.random()*200)+500));
 						verticalChart.series[0].setData(getAverage(equiVariArr), true);
 					}
 					if(test == 2){
-						equiVariArr.push(test , Math.floor((Math.random()*200)+600));
+						equiVariArr[test].push(Math.floor((Math.random()*200)+600));
 						verticalChart.series[0].setData(getAverage(equiVariArr), true);
 					}
 					if(test == 3){
-						equiVariArr.push(test, Math.floor((Math.random()*200)+800));
+						equiVariArr[test].push(Math.floor((Math.random()*200)+800));
 						verticalChart.series[0].setData(getAverage(equiVariArr), true);
 					}	
 			}
 		}
-		if(array = "diffDistArr"){
+		if(array == "diffDistArr"){
 			for(i = 0; i < repeatTimes; i ++){
 				var test = Math.floor(Math.random()*3);
 					if(test == 0){
-						diffDistArr.push(test , Math.floor((Math.random()*200)+500));
+						diffDistArr[test].push(Math.floor((Math.random()*200)+500));
 						verticalChart.series[0].setData(getAverage(diffDistArr), true);
 					}
 					if(test == 1){
-						diffDistArr.push(test , Math.floor((Math.random()*200)+650));
+						diffDistArr[test].push(Math.floor((Math.random()*200)+650));
 						verticalChart.series[0].setData(getAverage(diffDistArr), true);
 					}
 					if(test == 2){
-						diffDistArr.push(test , Math.floor((Math.random()*200)+800));
+						diffDistArr[test].push(Math.floor((Math.random()*200)+800));
 						verticalChart.series[0].setData(getAverage(diffDistArr), true);
 					}
 			}
@@ -172,14 +170,14 @@ function randomAdd(repeats , type, array)
 				if(test == 0){
 					var xCord = Math.random()*15;
 					var yCord = Math.floor(Math.random()*1000);
-					console.log(xCord +","+yCord);
+					//console.log(xCord +","+yCord);
 					logResults[test].push(new Array(xCord,yCord));
 					logChart.series[test].addPoint(new Array(xCord, yCord));						
 				}
 				if(test == 1){
 					var xCord = Math.random()*15;
 					var yCord = (Math.random()*1000 + 500);
-					console.log(xCord +","+yCord);
+					//console.log(xCord +","+yCord);
 					logResults[test].push(new Array(xCord,yCord));
 					logChart.series[test].addPoint(new Array(xCord, yCord));				
 				}
@@ -266,6 +264,175 @@ function randomAdd(repeats , type, array)
 	}
 }
 
+function randomAddSpoof(repeats , type, array)
+{	
+	var repeatTimes = repeats;
+	if(type == "dotPattern"){
+		if(array == "equaLongArr"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*3);
+					if(test == 0){
+						if(equaLongArrSpoof[test].length == 0){test = 1;}
+						equaLongArr[test].push(equaLongArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(equaLongArr), true);
+					}
+					if(test == 1){
+						if(equaLongArrSpoof[test].length == 0){test = 2;}
+						equaLongArr[test].push(equaLongArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(equaLongArr), true);
+					}
+					if(test == 2){
+						if(equaLongArrSpoof[test].length == 0){test = 0;}
+						equaLongArr[test].push(equaLongArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(equaLongArr), true);
+					}
+			}
+		}
+		if(array == "equiVariArr"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*4);
+					if(test == 0){
+						if(equiVariArrSpoof[test].length == 0){test = 1;}
+						equiVariArr[test].push(equiVariArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}
+					if(test == 1){
+							if(equiVariArrSpoof[test].length == 0){test = 2;}
+						equiVariArr[test].push(equiVariArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}
+					if(test == 2){
+							if(equiVariArrSpoof[test].length == 0){test = 3;}
+						equiVariArr[test].push(equiVariArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}
+					if(test == 3){
+							if(equiVariArrSpoof[test].length == 0){test = 0;}
+						equiVariArr[test].push(equiVariArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}	
+			}
+		}
+		if(array == "diffDistArr"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*3);
+					if(test == 0){
+						if(diffDistArrSpoof[test].length == 0){test = 1;}
+						diffDistArr[test].push(diffDistArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(diffDistArr), true);
+					}
+					if(test == 1){
+						if(diffDistArrSpoof[test].length == 0){test = 2;}
+						diffDistArr[test].push(diffDistArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(diffDistArr), true);
+					}
+					if(test == 2){
+						if(diffDistArrSpoof[test].length == 0){test = 0;}
+						diffDistArr[test].push(diffDistArrSpoof[test].pop());
+						verticalChart.series[0].setData(getAverage(diffDistArr), true);
+					}
+			}
+		}
+	}
+	if(array == null){
+		if(type == "logGraph"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*2);
+				if(test == 0){
+				if(logGraphResultsSpoof[test].length == 0){test = 1;}
+					var toPush = logGraphResultsSpoof[test].pop();
+					logResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));						
+				}
+				if(test == 1){
+				if(logGraphResultsSpoof[test].length == 0){test = 1;}
+					var toPush = logGraphResultsSpoof[test].pop();
+					logResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);				
+				}
+			}
+		}
+		if(type == "equaLongScatter"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*3);
+				if (test == 0) {
+				if(equaLongScatterSpoof[test].length == 0){test = 1;}
+					var toPush = logGraphResultsSpoof[test].pop();
+					equaLongResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);	
+				}
+				if (test == 1) {
+					if(equaLongScatterSpoof[test].length == 0){test = 2;}
+					var toPush = logGraphResultsSpoof[test].pop();
+					equaLongResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);
+				}
+				if (test == 2) {
+					if(equaLongScatterSpoof[test].length == 0){test = 0;}
+					var toPush = logGraphResultsSpoof[test].pop();
+					equaLongResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);
+				}
+			}
+		}
+		
+		if(type == "equiVariScatter"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*4);
+				if (test == 0) {
+					if(equiVariScatterSpoof[test].length == 0){test = 1;}
+					var toPush = equiVariScatterSpoof[test].pop();
+					equiVariResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);
+				}
+				if (test == 1) {
+					if(equiVariScatterSpoof[test].length == 0){test = 2;}
+					var toPush = equiVariScatterSpoof[test].pop();
+					equiVariResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);
+				}
+				if (test == 2) {
+				if(equiVariScatterSpoof[test].length == 0){test = 3;}
+					var toPush = equiVariScatterSpoof[test].pop();
+					equiVariResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);
+				}
+				if (test == 3) {
+					if(equiVariScatterSpoof[test].length == 0){test = 0;}
+					var toPush = equiVariScatterSpoof[test].pop();
+					equiVariResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);
+				}
+				
+			}
+		}
+		if(type == "diffDistScatter"){
+			for(i = 0; i < repeatTimes; i ++){
+			var test = Math.floor(Math.random()*4);
+				if (test == 0) {
+					if(diffDistScatterSpoof[test].length == 0){test = 1;}
+					var toPush = diffDistSpoof[test].pop();
+					diffDistResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);	
+				}
+				if (test == 1) {
+					if(diffDistScatterSpoof[test].length == 0){test = 1;}
+					var toPush = diffDistSpoof[test].pop();
+					diffDistResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);	
+				}
+				if (test == 2) {
+					if(diffDistScatterSpoof[test].length == 0){test = 1;}
+					var toPush = diffDistSpoof[test].pop();
+					diffDistResults[test].push(toPush);
+					logChart.series[test].addPoint(toPush);	
+				}
+				
+			}
+		}
+	}
+}
+
 
 //-----------------------------------------GRAPH CODE-------------------------------------------------
 function barChart(title, array, nameArray, drawDestination) {
@@ -339,7 +506,8 @@ function barChart(title, array, nameArray, drawDestination) {
 					bar : {
 						dataLabels : {
 							enabled : true
-						}
+						},
+					animation : false	
 					}
 				},
 				credits : {
@@ -397,13 +565,15 @@ function logDat(drawDestination,type, params) {
 					},
 					startOnTick : true,
 					endOnTick : true,
-					showLastLabel : true
+					showLastLabel : true,
+					min: 0
 				},
 				yAxis : {
 					title : {
 						text : yTitle
 					},
-					max : 2000
+					max : 2000,
+					min : 0,
 				},
 				tooltip : {
 					formatter : function() {
