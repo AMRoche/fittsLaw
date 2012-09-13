@@ -3,9 +3,32 @@
 //ues first method for logGraph and second for dotPattern graph
 //logGraph = logarithmic time graph
 //dotPattern = graph comparing average time for each
-var frameToDrawTo = "canvas";
+var frameToDrawTo = 'canvas'';
+
+	
+
 var genericLength = length; //pulled from experiments.js . Define as integer to remove experiments.js from requirements for this page.
+
 //console.log(genericLength);
+
+/*if(document.getElementById(frameToDrawTo).getAttribute("type")!= null ||document.getElementById(frameToDrawTo).getAttribute("array")!= null)
+ if(document.getElementById(frameToDrawTo).getAttribute("type") != null){
+ 	var typeOfDrawToMe = document.getElementById(frameToDrawTo).getAttribute("type");
+ 	console.log(typeOfDrawToMe);
+ 	
+ }
+if(document.getElementById(frameToDrawTo).getAttribute("array")!=null){
+	var arrOfDrawToMe = document.getElementById(frameToDrawTo).getAttribute("array");
+ 	console.log(arrOfDrawToMe);
+} */
+
+//"logGraphBArr","logGraphRArr","equiVariArr","diffDistArr","equaLongArr"
+//equiVari is a 4 * quantity of input array
+//(or however many different types of ball and distance you're rendering for each experiment)
+//rest are 3 * quanity of input
+//refresh window every second by re-calling the graph render.
+
+
 var logGraphBArr = new Array(3);
 for ( i = 0; i < logGraphBArr.length; i++) {
 	logGraphBArr[i] = new Array();
@@ -61,11 +84,188 @@ var logChart;
 var verticalChart;
 var undrawn = true;
 
-$(document).ready(function() {
-	logDat('canvas','logGraph', new Array('Distance versus time for two inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Device One', '#0000FF', 'logResults[0]'), new Array('Device Two', '#FF0000', 'logResults[1]'))));
-});
-
 //-----------------------------------------TEST SECTION-----------------------------------------------
+// values to randomly produce numbers to fill the arrays with. Because shit's that cool.
+//				6			5				7
+//" array = equaLongArr, equiVariArr, diffDistArr" // fudging bar graphs
+//			1				3				4				2
+//" type = logGraph, equaLongScatter, diffDistScatter, equiVariScatter" //fudging scatter graphs
+// dist/width , average time
+/*						0					1					2					3
+ * logGraph: 		1-15,0-1000		1-15,500-1500
+ *  equaLongScatter	4.44,			8,						13.33,
+ * diffDistScatter	2.67,			5.33,					8,
+ * equiVariScatter	1.1,			2.6,					2.96,				13.33,	
+ * 
+ * +- 100 ms for generation.
+ * equaLongArr		800					700					600	
+ * equiVariArr		400					500					600					800	
+ * diffDistArr		500					650					800
+ * 
+ */
+
+
+function randomAdd(repeats , type, array)
+{	
+	var repeatTimes = repeats;
+	if(type == null){
+		if(array = "equaLongArr"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*3);
+					if(test == 0){
+						equaLongArr.push(test , Math.floor((Math.random()*200)+800));
+						verticalChart.series[0].setData(getAverage(equaLongArr), true);
+					}
+					if(test == 1){
+						equaLongArr.push(test , Math.floor((Math.random()*200)+700));
+						verticalChart.series[0].setData(getAverage(equaLongArr), true);
+					}
+					if(test == 2){
+						equaLongArr.push(test , Math.floor((Math.random()*200)+600));
+						verticalChart.series[0].setData(getAverage(equaLongArr), true);
+					}
+			}
+		}
+		if(array = "equiVariArr"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*4);
+					if(test == 0){
+						equiVariArr.push(test , Math.floor((Math.random()*200)+400));
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}
+					if(test == 1){
+						equiVariArr.push(test , Math.floor((Math.random()*200)+500));
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}
+					if(test == 2){
+						equiVariArr.push(test , Math.floor((Math.random()*200)+600));
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}
+					if(test == 3){
+						equiVariArr.push(test, Math.floor((Math.random()*200)+800));
+						verticalChart.series[0].setData(getAverage(equiVariArr), true);
+					}	
+			}
+		}
+		if(array = "diffDistArr"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*3);
+					if(test == 0){
+						diffDistArr.push(test , Math.floor((Math.random()*200)+500));
+						verticalChart.series[0].setData(getAverage(diffDistArr), true);
+					}
+					if(test == 1){
+						diffDistArr.push(test , Math.floor((Math.random()*200)+650));
+						verticalChart.series[0].setData(getAverage(diffDistArr), true);
+					}
+					if(test == 2){
+						diffDistArr.push(test , Math.floor((Math.random()*200)+800));
+						verticalChart.series[0].setData(getAverage(diffDistArr), true);
+					}
+			}
+		}
+	}
+	if(array == null){
+		if(type == "logGraph"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*2);
+				if(test == 0){
+					var xCord = Math.random()*15;
+					var yCord = Math.floor(Math.random()*1000);
+					console.log(xCord +","+yCord);
+					logResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));						
+				}
+				if(test == 1){
+					var xCord = Math.random()*15;
+					var yCord = (Math.random()*1000 + 500);
+					console.log(xCord +","+yCord);
+					logResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));				
+				}
+			}
+		}
+		if(type == "equaLongScatter"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*3);
+				if (test == 0) {
+					var xCord = 4.44;
+					var yCord = Math.floor((Math.random()*200)+800);
+					equaLongResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));	
+				}
+				if (test == 1) {
+					var xCord = 8;
+					var yCord = Math.floor((Math.random()*200)+700);
+					equaLongResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));
+				}
+				if (test == 2) {
+					var xCord = 13.33;
+					var yCord = Math.floor((Math.random()*200)+600);
+					equaLongResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));
+				}
+			}
+		}
+		
+		if(type == "equiVariScatter"){
+			for(i = 0; i < repeatTimes; i ++){
+				var test = Math.floor(Math.random()*4);
+				if (test == 0) {
+					var xCord = 1.1;
+					var yCord = Math.floor((Math.random()*200)+400);
+					equiVariResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));	
+				}
+				if (test == 1) {
+					var xCord = 2.6;
+					var yCord = Math.floor((Math.random()*200)+500);
+					equiVariResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));
+				}
+				if (test == 2) {
+					var xCord = 2.96;
+					var yCord = Math.floor((Math.random()*200)+600);
+					equiVariResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));
+				}
+				if (test == 3) {
+					var xCord = 13.33;
+					var yCord = Math.floor((Math.random()*200)+800);
+					equiVariResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));
+				}
+				
+			}
+		}
+		if(type == "diffDistScatter"){
+			for(i = 0; i < repeatTimes; i ++){
+			var test = Math.floor(Math.random()*4);
+				if (test == 0) {
+					var xCord = 2.67;
+					var yCord = Math.floor((Math.random()*200)+500);
+					diffDistResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));	
+				}
+				if (test == 1) {
+					var xCord = 5.33;
+					var yCord = Math.floor((Math.random()*200)+650);
+					diffDistResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));
+				}
+				if (test == 2) {
+					var xCord = 8;
+					var yCord = Math.floor((Math.random()*200)+800);
+					diffDistResults[test].push(new Array(xCord,yCord));
+					logChart.series[test].addPoint(new Array(xCord, yCord));
+				}
+				
+			}
+		}
+	}
+}
+
 
 //-----------------------------------------GRAPH CODE-------------------------------------------------
 function barChart(title, array, nameArray, drawDestination) {
@@ -156,7 +356,7 @@ function barChart(title, array, nameArray, drawDestination) {
 //----LOG GRAPHING----
 
 function logDat(drawDestination,type, params) {
-	document.getElementById(drawDestination).setAttribute("type", type);
+	//document.getElementById(drawDestination).setAttribute("type", type);
 	var title = params[0];
 	var xTitle = params[1];
 	var yTitle = params[2];
@@ -272,8 +472,6 @@ function graphRender(type, arrayName, title, drawDestination) {
 	if (drawDestination == "" || drawDestination == null) {
 		drawer = frameToDrawTo;
 	}
-	document.getElementById(drawer).setAttribute("type", type);
-	document.getElementById(drawer).setAttribute("array", arrayName);
 	if (type == "dotPattern") {
 		barChart(title, arrayName, null, drawer);
 	}
@@ -300,9 +498,9 @@ function logGraphB(message) {
 	var y = Math.floor(parseInt(arrayInfo[1]));
 
 	logResults[0].push(new Array(x, y));
-	if (document.getElementById("canvas").getAttribute("type") == 'logGraph') {
+	if (document.getElementById(frameToDrawTo).getAttribute("type") == 'logGraph') {
 		logChart.series[0].addPoint(new Array(x, y));
-		logDat('canvas','logGraph', new Array('Distance versus time for two inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Device One', '#0000FF', 'logResults[0]'), new Array('Device Two', '#FF0000', 'logResults[1]'))));		
+		logDat(frameToDrawTo,'logGraph', new Array('Distance versus time for two inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Device One', '#0000FF', 'logResults[0]'), new Array('Device Two', '#FF0000', 'logResults[1]'))));		
 	}
 }
 
@@ -322,10 +520,10 @@ function logGraphR(message) {
 	var y = Math.floor(parseInt(arrayInfo[1]));
 	logResults[1].push(new Array(x, y));
 //console.log("pushed");
-	if (document.getElementById("canvas").getAttribute("type") == 'logGraph') {
+	if (document.getElementById(frameToDrawTo).getAttribute("type") == 'logGraph') {
 		//	graphRender('logGraph',new Array(logResults[0],logResults[1]),'Distance versus time for two inputs',frameToDrawTo);
 		logChart.series[1].addPoint(new Array(x, y));
-		logDat('canvas','logGraph', new Array('Distance versus time for two inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Device One', '#0000FF', 'logResults[0]'), new Array('Device Two', '#FF0000', 'logResults[1]'))));
+		logDat(frameToDrawTo,'logGraph', new Array('Distance versus time for two inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Device One', '#0000FF', 'logResults[0]'), new Array('Device Two', '#FF0000', 'logResults[1]'))));
 	}
 }
 
@@ -355,14 +553,14 @@ function equiVari(message) {
 	equiVariArr[arrayInfo[0]].push(arrayInfo[1]);
 	equiVariResults[arrayInfo[0]].push(new Array(x,y));
 	
-	if (document.getElementById('canvas').getAttribute('array') == "equiVariArr") {
+	if (document.getElementById(frameToDrawTo).getAttribute('array') == "equiVariArr") {
 		var AverageArr = getAverage(equiVariArr);
 		verticalChart.series[0].setData(AverageArr, true);
 	}
 	
-	if (document.getElementById('canvas').getAttribute('type') == "equiVariScatter") {
+	if (document.getElementById(frameToDrawTo).getAttribute('type') == "equiVariScatter") {
 		logChart.series[arrayInfo[0]].addPoint(new Array(x,y));
-		logDat('canvas','equiVariScatter', new Array('Distance versus time for four inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Big Blue', '#0000FF', 'equiVariResults[0]'), new Array('Medium Green', '#00FF00', 'equiVariResults[1]'), new Array('Big Red', '#FF0000', 'equiVariResults[2]'), new Array('Small Yellow', '#FFFF00', 'equiVariResults[3]'))));
+		logDat(frameToDrawTo,'equiVariScatter', new Array('Distance versus time for four inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Big Blue', '#0000FF', 'equiVariResults[0]'), new Array('Medium Green', '#00FF00', 'equiVariResults[1]'), new Array('Big Red', '#FF0000', 'equiVariResults[2]'), new Array('Small Yellow', '#FFFF00', 'equiVariResults[3]'))));
 	}
 }
 
@@ -391,14 +589,14 @@ function diffDist(message) {
 	diffDistArr[arrayInfo[0]].push(arrayInfo[1]);
 	diffDistResults[arrayInfo[0]].push(new Array(x,y));
 	
-	if (document.getElementById('canvas').getAttribute('array') == "diffDistArr") {
+	if (document.getElementById(frameToDrawTo).getAttribute('array') == "diffDistArr") {
 		var AverageArr = getAverage(diffDistArr);
 		verticalChart.series[0].setData(AverageArr, true);
 	}
 	
-	if (document.getElementById('canvas').getAttribute('type') == "diffDistScatter") {
+	if (document.getElementById(frameToDrawTo).getAttribute('type') == "diffDistScatter") {
 		logChart.series[arrayInfo[0]].addPoint(new Array(x,y));
-		logDat('canvas','diffDistScatter', new Array('Distance versus time for three inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Medium Blue', '#0000FF', 'diffDistResults[0]'), new Array('Medium Green', '#00FF00', 'diffDistResults[1]'), new Array('Medium Red', '#FF0000', 'diffDistResults[2]'))));
+		logDat(frameToDrawTo,'diffDistScatter', new Array('Distance versus time for three inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Medium Blue', '#0000FF', 'diffDistResults[0]'), new Array('Medium Green', '#00FF00', 'diffDistResults[1]'), new Array('Medium Red', '#FF0000', 'diffDistResults[2]'))));
 	}
 }
 
@@ -425,13 +623,13 @@ function equaLong(message) {
 
 	equaLongResults[arrayInfo[0]].push(new Array(x,y));
 	equaLongArr[arrayInfo[0]].push(arrayInfo[1]);
-	if (document.getElementById('canvas').getAttribute('array') == "equaLongArr") {
+	if (document.getElementById(frameToDrawTo).getAttribute('array') == "equaLongArr") {
 		var AverageArr = getAverage(equaLongArr);
 		verticalChart.series[0].setData(AverageArr, true);
 	}
-	if (document.getElementById('canvas').getAttribute('type') == "equaLongScatter") {
+	if (document.getElementById(frameToDrawTo).getAttribute('type') == "equaLongScatter") {
 		logChart.series[arrayInfo[0]].addPoint(new Array(x,y));
-		onclick = logDat('canvas','equaLongScatter', new Array('Distance versus time for three inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Small Blue', '#0000FF', 'equaLongResults[0]'), new Array('Medium Green', '#00FF00', 'equaLongResults[1]'), new Array('Big Red', '#FF0000', 'equaLongResults[2]'))));
+		logDat(frameToDrawTo,'equaLongScatter', new Array('Distance versus time for three inputs', 'Distance from point / Ball width (px)', 'Time taken (ms)', new Array(new Array('Small Blue', '#0000FF', 'equaLongResults[0]'), new Array('Medium Green', '#00FF00', 'equaLongResults[1]'), new Array('Big Red', '#FF0000', 'equaLongResults[2]'))));
 	}
 }
 
